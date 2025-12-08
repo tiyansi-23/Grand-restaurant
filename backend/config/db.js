@@ -1,7 +1,15 @@
 import mongoose from "mongoose";
+import dotenv from 'dotenv';
 
-export const connectDB = async () => {   
-    console.log("connected")
-    await mongoose.connect('mongodb+srv://tiyansichodavadiya_db_user:tiya123@grant-rastaurant.gseuoua.mongodb.net/').then(()=>console.log("DB connected")).catch((e)=>console.log(e));
+dotenv.config();
 
-}
+export const connectDB = async () => {
+    const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/grand-restaurant';
+    try {
+        await mongoose.connect(uri);
+        console.log('DB connected');
+    } catch (e) {
+        console.error('DB connection error:', e);
+        throw e;
+    }
+};
